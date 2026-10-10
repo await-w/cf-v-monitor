@@ -47,5 +47,11 @@ jobs:
       - name: Agent tests
         run: cd agent && go test ./...
 
+      # 注意：不能写 `node --test <目录>`，该形式会被当成模块路径解析。
+      # 这里显式展开成文件列表，并排除 scripts/ 与 agent/ 下的
+      # workflow 自审计用例（那些校验上游 CI/发布配置，与部署无关）。
       - name: Frontend and worker tests
-        run: node --test frontend/src frontend/test worker/src worker/test
+        run: |
+          mapfile -t files < <(find frontend/src frontend/test worker/src worker/test -name '*.test.mjs' -print)
+          echo "测试文件数: ${#files[@]}"
+          node --test "${files[@]}"
