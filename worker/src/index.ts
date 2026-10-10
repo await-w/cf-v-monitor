@@ -311,9 +311,9 @@ app.use('/api/*', async (c, next) => {
   return undefined;
 });
 
-app.get('/agent/install.sh', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-monitor-test/dev/agent/install.sh', 302));
-app.get('/agent/install-linux.sh', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-monitor-test/dev/agent/install-linux.sh', 302));
-app.get('/agent/install-windows.ps1', (c) => c.redirect('https://raw.githubusercontent.com/kadidalax/cf-monitor-test/dev/agent/install-windows.ps1', 302));
+app.get('/agent/install.sh', (c) => c.redirect('https://raw.githubusercontent.com/await-w/cf-vps-monitor/refs/heads/main/agent/install.sh', 302));
+app.get('/agent/install-linux.sh', (c) => c.redirect('https://raw.githubusercontent.com/await-w/cf-vps-monitor/refs/heads/main/agent/install-linux.sh', 302));
+app.get('/agent/install-windows.ps1', (c) => c.redirect('https://raw.githubusercontent.com/await-w/cf-vps-monitor/refs/heads/main/agent/install-windows.ps1', 302));
 
 // 公开 API，无认证
 app.route('/api/setup', setupRoutes);

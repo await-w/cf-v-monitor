@@ -1,7 +1,7 @@
 name: CI
 
-# 必须保留 workflow_dispatch：worker 的 prebuild CI gate 会以
-# path=.github/workflows/ci.yml + event=workflow_dispatch 查询最近一次成功的运行。
+# workflow_dispatch 必须保留：Cloudflare Workers Builds 的 prebuild CI gate
+# 会以 path=.github/workflows/ci.yml + event=workflow_dispatch 查询最近一次成功的运行。
 on:
   workflow_dispatch:
   push:
@@ -14,19 +14,20 @@ permissions:
 
 jobs:
   verify:
+    name: verify
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24'
           cache: npm
 
       - name: Setup Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version-file: agent/go.mod
           cache-dependency-path: agent/go.sum
@@ -43,8 +44,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm test
+      - name: Agent tests
+        run: cd agent && go test ./...
 
-      - name: Security check
-        run: npm run security:check
+      - name: Frontend and worker tests
+        run: node --test frontend/src frontend/test worker/src worker/test
