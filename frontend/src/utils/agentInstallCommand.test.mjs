@@ -30,7 +30,7 @@ const expectedBase = ['-s', 'https://panel.example', '-n', 'node-123', '-i', '33
 
 test('Unix install preserves the repository script, node identity and credential argument', () => {
   const command = buildAgentInstallCommand({ platform: 'unix', ...base });
-  assert.ok(command.includes("https://raw.githubusercontent.com/" + CF_MONITOR_REPOSITORY + "/refs/heads/dev/agent/install.sh"));
+  assert.ok(command.includes("https://raw.githubusercontent.com/" + CF_MONITOR_REPOSITORY + "/refs/heads/main/agent/install.sh"));
   assert.deepEqual(argumentsWithoutCredential(command), expectedBase);
 });
 
